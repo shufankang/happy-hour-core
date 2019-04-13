@@ -28,6 +28,7 @@
     "test:prod": "npm run lint && npm run test -- --no-cache",
     "deploy-docs": "ts-node tools/gh-pages-publish",
     "report-coverage": "cat ./coverage/lcov.info | coveralls",
+    "test-with-coverage": "cat ./coverage/lcov.info | codacy-coverage --token 83a4580353a74865b60e67954b2537c2",
     "commit": "git-cz",
     "semantic-release": "semantic-release",
     "semantic-release-prepare": "ts-node tools/semantic-release-prepare",
@@ -123,6 +124,7 @@
   },
   "dependencies": {
     "@types/uuid": "^3.4.4",
+    "codacy-coverage": "^3.4.0",
     "uuid": "^3.3.2"
   }
 }
