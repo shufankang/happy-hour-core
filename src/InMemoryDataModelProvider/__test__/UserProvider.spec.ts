@@ -1,5 +1,5 @@
-import {Model} from '../../DataModels';
-import {InMemoryUserProvider} from '../UserProvider';
+import { Model } from '../../DataModels';
+import { InMemoryUserProvider } from '../UserProvider';
 
 describe('UserProvider Tests', () => {
   let userProvider: Model.UserProvider;
@@ -30,10 +30,8 @@ describe('UserProvider Tests', () => {
     expect(retrievedUser).toEqual(user);
 
     // List
-    await userProvider.create(
-        {...user, id: 'newUserId', eventId: 'newEventId'});
-    await userProvider.create(
-        {...user, id: 'anotherUserId', eventId: 'anotherEventId'});
+    await userProvider.create({ ...user, id: 'newUserId', eventId: 'newEventId' });
+    await userProvider.create({ ...user, id: 'anotherUserId', eventId: 'anotherEventId' });
     let users = await userProvider.listUsersByEventId('eventId');
     expect(users).toContainEqual(user);
     expect(users.length).toEqual(1);

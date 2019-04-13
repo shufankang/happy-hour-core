@@ -1,5 +1,5 @@
-import {Model} from '../../DataModels';
-import {InMemoryItemProvider} from '../ItemProvider';
+import { Model } from '../../DataModels';
+import { InMemoryItemProvider } from '../ItemProvider';
 
 describe('ItemProvider Tests', () => {
   let itemProvider: Model.ItemProvider;
@@ -30,12 +30,11 @@ describe('ItemProvider Tests', () => {
     expect(retrievedItem).toEqual(item);
 
     // List
-    await itemProvider.create({...item, id: 'newItemId'});
-    await itemProvider.create(
-        {...item, id: 'anotherItemId', eventId: 'newEventId'});
+    await itemProvider.create({ ...item, id: 'newItemId' });
+    await itemProvider.create({ ...item, id: 'anotherItemId', eventId: 'newEventId' });
     let items = await itemProvider.listItemsByEventId('eventId');
     expect(items).toContainEqual(item);
-    expect(items).toContainEqual({...item, id: 'newItemId'});
+    expect(items).toContainEqual({ ...item, id: 'newItemId' });
     expect(items.length).toEqual(2);
 
     // delete

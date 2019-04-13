@@ -1,7 +1,7 @@
-import {Event} from '../index';
+import { Event } from '../index';
 
 describe('Test Event', () => {
-  const eventData: Event.Data = {id: 'eventId', budget: 10, users: []};
+  const eventData: Event.Data = { id: 'eventId', budget: 10, users: [] };
   let event: Event.Event;
   beforeEach(() => {
     event = new Event.ConcreteEvent(eventData);
@@ -18,18 +18,15 @@ describe('Test Event', () => {
   });
 
   it('should not add user with initial credits that exceed budget', () => {
-    expect(() => event.addUser('userId', 11))
-        .toThrowError(Event.NOT_ENOUGH_BUDGET_ERROR);
+    expect(() => event.addUser('userId', 11)).toThrowError(Event.NOT_ENOUGH_BUDGET_ERROR);
   });
 
   it('should not add user with negative credits', () => {
-    expect(() => event.addUser('userId', -11))
-        .toThrowError(Event.INVALID_INITIAL_CREDITS);
+    expect(() => event.addUser('userId', -11)).toThrowError(Event.INVALID_INITIAL_CREDITS);
   });
 
   it('should not set budget that less than assigned credits.', () => {
     event.addUser('userId', 10);
-    expect(() => event.setBudget(5))
-        .toThrowError(Event.NOT_ENOUGH_BUDGET_ERROR);
+    expect(() => event.setBudget(5)).toThrowError(Event.NOT_ENOUGH_BUDGET_ERROR);
   });
 });

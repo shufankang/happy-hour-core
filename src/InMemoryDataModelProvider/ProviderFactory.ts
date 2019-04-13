@@ -1,12 +1,11 @@
-import {Model} from '../DataModels';
+import { Model } from '../DataModels';
 
-import {InMemoryEventProvider} from './EventProvider';
-import {InMemoryItemProvider} from './ItemProvider';
-import {InMemoryTransactionProvider} from './TransactionProvider';
-import {InMemoryUserProvider} from './UserProvider';
+import { InMemoryEventProvider } from './EventProvider';
+import { InMemoryItemProvider } from './ItemProvider';
+import { InMemoryTransactionProvider } from './TransactionProvider';
+import { InMemoryUserProvider } from './UserProvider';
 
-export class InMemoryDataModelProviderFactory implements
-    Model.DataProviderFactory {
+export class InMemoryDataModelProviderFactory implements Model.DataProviderFactory {
   createEventProvider = (): Model.EventProvider => {
     return new InMemoryEventProvider();
   };
@@ -18,5 +17,5 @@ export class InMemoryDataModelProviderFactory implements
   };
   createTransactionProvider = (): Model.TransactionProvider => {
     return new InMemoryTransactionProvider();
-  }
+  };
 }

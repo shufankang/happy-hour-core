@@ -1,4 +1,4 @@
-import {Model} from '../DataModels';
+import { Model } from '../DataModels';
 
 export class InMemoryTransactionProvider implements Model.TransactionProvider {
   private transactions: Map<string, Model.Transaction> = new Map();
@@ -6,52 +6,49 @@ export class InMemoryTransactionProvider implements Model.TransactionProvider {
   private userIdToTransactionIdSet: Map<string, Set<string>> = new Map();
   private itemIdToTransactionIdSet: Map<string, Set<string>> = new Map();
 
-  listTransactionsByItemId = async(itemId: string):
-      Promise<Model.Transaction[]> => {
-        const transactionIdSet = this.itemIdToTransactionIdSet.get(itemId);
-        const transactionList: Model.Transaction[] = [];
-        if (transactionIdSet) {
-          transactionIdSet.forEach(id => {
-            const transaction = this.transactions.get(id);
-            if (transaction) {
-              transactionList.push(transaction);
-            }
-          });
+  listTransactionsByItemId = async (itemId: string): Promise<Model.Transaction[]> => {
+    const transactionIdSet = this.itemIdToTransactionIdSet.get(itemId);
+    const transactionList: Model.Transaction[] = [];
+    if (transactionIdSet) {
+      transactionIdSet.forEach(id => {
+        const transaction = this.transactions.get(id);
+        if (transaction) {
+          transactionList.push(transaction);
         }
-        return transactionList;
-      }
+      });
+    }
+    return transactionList;
+  };
 
-  listTransactionsByUserId = async(userId: string):
-      Promise<Model.Transaction[]> => {
-        const transactionIdSet = this.userIdToTransactionIdSet.get(userId);
-        const transactionList: Model.Transaction[] = [];
-        if (transactionIdSet) {
-          transactionIdSet.forEach(id => {
-            const transaction = this.transactions.get(id);
-            if (transaction) {
-              transactionList.push(transaction);
-            }
-          });
+  listTransactionsByUserId = async (userId: string): Promise<Model.Transaction[]> => {
+    const transactionIdSet = this.userIdToTransactionIdSet.get(userId);
+    const transactionList: Model.Transaction[] = [];
+    if (transactionIdSet) {
+      transactionIdSet.forEach(id => {
+        const transaction = this.transactions.get(id);
+        if (transaction) {
+          transactionList.push(transaction);
         }
-        return transactionList;
-      }
+      });
+    }
+    return transactionList;
+  };
 
-  listTransactionsByEventId = async(eventId: string):
-      Promise<Model.Transaction[]> => {
-        const transactionIdSet = this.eventIdToTransactionIdSet.get(eventId);
-        const transactionList: Model.Transaction[] = [];
-        if (transactionIdSet) {
-          transactionIdSet.forEach(id => {
-            const transaction = this.transactions.get(id);
-            if (transaction) {
-              transactionList.push(transaction);
-            }
-          });
+  listTransactionsByEventId = async (eventId: string): Promise<Model.Transaction[]> => {
+    const transactionIdSet = this.eventIdToTransactionIdSet.get(eventId);
+    const transactionList: Model.Transaction[] = [];
+    if (transactionIdSet) {
+      transactionIdSet.forEach(id => {
+        const transaction = this.transactions.get(id);
+        if (transaction) {
+          transactionList.push(transaction);
         }
-        return transactionList;
-      }
+      });
+    }
+    return transactionList;
+  };
 
-  create = async(t: Model.Transaction): Promise<Model.Transaction> => {
+  create = async (t: Model.Transaction): Promise<Model.Transaction> => {
     if (this.transactions.get(t.id)) {
       throw new Error('AlreadyExists');
     }
@@ -79,7 +76,7 @@ export class InMemoryTransactionProvider implements Model.TransactionProvider {
     }
     return t;
   };
-  get = async(id: string): Promise<Model.Transaction> => {
+  get = async (id: string): Promise<Model.Transaction> => {
     const transaction = this.transactions.get(id);
     if (transaction) {
       return transaction;
@@ -87,7 +84,7 @@ export class InMemoryTransactionProvider implements Model.TransactionProvider {
       throw new Error('NotFound');
     }
   };
-  update = async(t: Model.Transaction): Promise<Model.Transaction> => {
+  update = async (t: Model.Transaction): Promise<Model.Transaction> => {
     const transaction = this.transactions.get(t.id);
     if (transaction) {
       this.transactions.set(t.id, t);
@@ -96,7 +93,7 @@ export class InMemoryTransactionProvider implements Model.TransactionProvider {
       throw new Error('NotFound');
     }
   };
-  delete = async(id: string): Promise<void> => {
+  delete = async (id: string): Promise<void> => {
     const transaction = this.transactions.get(id);
     if (transaction) {
       const eventId = transaction.eventId;
@@ -118,5 +115,5 @@ export class InMemoryTransactionProvider implements Model.TransactionProvider {
       }
       this.transactions.delete(id);
     }
-  }
+  };
 }

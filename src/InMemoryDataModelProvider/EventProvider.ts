@@ -1,11 +1,10 @@
-import {Model} from '../DataModels';
+import { Model } from '../DataModels';
 
 export class InMemoryEventProvider implements Model.EventProvider {
   private events: Map<string, Model.Event> = new Map();
   private organizerIdToEventIdMap: Map<string, Set<string>> = new Map();
 
-  listEventsByOrganizerId =
-      async(organizerId: string): Promise<Model.Event[]> => {
+  listEventsByOrganizerId = async (organizerId: string): Promise<Model.Event[]> => {
     const eventIdSet = this.organizerIdToEventIdMap.get(organizerId);
     const eventList: Model.Event[] = [];
     if (eventIdSet) {
@@ -18,7 +17,7 @@ export class InMemoryEventProvider implements Model.EventProvider {
     }
     return eventList;
   };
-  create = async(t: Model.Event): Promise<Model.Event> => {
+  create = async (t: Model.Event): Promise<Model.Event> => {
     if (this.events.get(t.id)) {
       throw new Error('AlreadyExists');
     }
@@ -31,7 +30,7 @@ export class InMemoryEventProvider implements Model.EventProvider {
     }
     return t;
   };
-  get = async(id: string): Promise<Model.Event> => {
+  get = async (id: string): Promise<Model.Event> => {
     const event = this.events.get(id);
     if (event) {
       return event;
@@ -39,7 +38,7 @@ export class InMemoryEventProvider implements Model.EventProvider {
       throw new Error('NotFound');
     }
   };
-  update = async(t: Model.Event): Promise<Model.Event> => {
+  update = async (t: Model.Event): Promise<Model.Event> => {
     const event = this.events.get(t.id);
     if (event) {
       this.events.set(t.id, t);
@@ -48,7 +47,7 @@ export class InMemoryEventProvider implements Model.EventProvider {
       throw new Error('NotFound');
     }
   };
-  delete = async(id: string): Promise<void> => {
+  delete = async (id: string): Promise<void> => {
     const event = this.events.get(id);
     if (event) {
       const organizerId = event.organizerId;
@@ -58,5 +57,5 @@ export class InMemoryEventProvider implements Model.EventProvider {
       }
       this.events.delete(id);
     }
-  }
+  };
 }

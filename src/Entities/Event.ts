@@ -1,4 +1,4 @@
-import {User} from './index';
+import { User } from './index';
 
 export const NOT_ENOUGH_BUDGET_ERROR = 'NotEnoughBudget';
 export const INVALID_INITIAL_CREDITS = 'InvalidInitialCredits';
@@ -26,8 +26,7 @@ export class ConcreteEvent implements Event {
     this.users = event.users.slice(0);
   }
 
-  getData = (): Data =>
-      ({id: this.id, budget: this.budget, users: this.users.slice(0)});
+  getData = (): Data => ({ id: this.id, budget: this.budget, users: this.users.slice(0) });
 
   addUser = (userId: string, initialCredits: number): User.Data => {
     if (initialCredits <= 0) {
@@ -37,8 +36,7 @@ export class ConcreteEvent implements Event {
     if (initialCredits + currentAssignedCredits > this.budget) {
       throw new Error(NOT_ENOUGH_BUDGET_ERROR);
     }
-    const user: User.Data =
-        {eventId: this.id, id: userId, initialCredits, transactions: []};
+    const user: User.Data = { eventId: this.id, id: userId, initialCredits, transactions: [] };
     this.users.push(user);
     return user;
   };
@@ -52,6 +50,5 @@ export class ConcreteEvent implements Event {
   };
 
   private getCurrentAssignedCredits = (): number =>
-      this.users.map(user => user.initialCredits)
-          .reduce((sum, cur) => sum + cur, 0);
+    this.users.map(user => user.initialCredits).reduce((sum, cur) => sum + cur, 0);
 }

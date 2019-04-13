@@ -1,25 +1,24 @@
-import {Model} from '../DataModels';
+import { Model } from '../DataModels';
 
 export class InMemoryItemProvider implements Model.ItemProvider {
   private items: Map<string, Model.Item> = new Map();
   private eventIdToItemIdSet: Map<string, Set<string>> = new Map();
 
-  listItemsByEventId = async(eventId: string):
-      Promise<Model.Item[]> => {
-        const itemIdSet = this.eventIdToItemIdSet.get(eventId);
-        const itemList: Model.Item[] = [];
-        if (itemIdSet) {
-          itemIdSet.forEach(id => {
-            const item = this.items.get(id);
-            if (item) {
-              itemList.push(item);
-            }
-          });
+  listItemsByEventId = async (eventId: string): Promise<Model.Item[]> => {
+    const itemIdSet = this.eventIdToItemIdSet.get(eventId);
+    const itemList: Model.Item[] = [];
+    if (itemIdSet) {
+      itemIdSet.forEach(id => {
+        const item = this.items.get(id);
+        if (item) {
+          itemList.push(item);
         }
-        return itemList;
-      }
+      });
+    }
+    return itemList;
+  };
 
-  create = async(t: Model.Item): Promise<Model.Item> => {
+  create = async (t: Model.Item): Promise<Model.Item> => {
     if (this.items.get(t.id)) {
       throw new Error('AlreadyExists');
     }
@@ -32,7 +31,7 @@ export class InMemoryItemProvider implements Model.ItemProvider {
     }
     return t;
   };
-  get = async(id: string): Promise<Model.Item> => {
+  get = async (id: string): Promise<Model.Item> => {
     const item = this.items.get(id);
     if (item) {
       return item;
@@ -40,7 +39,7 @@ export class InMemoryItemProvider implements Model.ItemProvider {
       throw new Error('NotFound');
     }
   };
-  update = async(t: Model.Item): Promise<Model.Item> => {
+  update = async (t: Model.Item): Promise<Model.Item> => {
     const item = this.items.get(t.id);
     if (item) {
       this.items.set(t.id, t);
@@ -49,7 +48,7 @@ export class InMemoryItemProvider implements Model.ItemProvider {
       throw new Error('NotFound');
     }
   };
-  delete = async(id: string): Promise<void> => {
+  delete = async (id: string): Promise<void> => {
     const item = this.items.get(id);
     if (item) {
       const eventId = item.eventId;
@@ -59,5 +58,5 @@ export class InMemoryItemProvider implements Model.ItemProvider {
       }
       this.items.delete(id);
     }
-  }
+  };
 }

@@ -1,10 +1,9 @@
 import * as UUID from 'uuid';
 
-import {Transaction} from './Transaction';
+import { Transaction } from './Transaction';
 
 export const NOT_ENOUGH_CREDITS_TO_SPEND = 'Not enough credits to spend.';
-export const NOT_ENOUGH_CREDITS_TO_RETURN =
-    'Not enough credits to return for requested item.';
+export const NOT_ENOUGH_CREDITS_TO_RETURN = 'Not enough credits to return for requested item.';
 export const AMOUNT_SHOULD_GREATER_THAN_0 = 'Amount should greater than 0';
 
 export interface Data {
@@ -67,24 +66,24 @@ export class ConcreteUser implements User {
   };
 
   getCredits = (): number => {
-    return this.transactions.map((transaction) => transaction.credits)
-        .reduce((sum, credit) => sum - credit, this.initialCredits);
+    return this.transactions
+      .map(transaction => transaction.credits)
+      .reduce((sum, credit) => sum - credit, this.initialCredits);
   };
 
   getSpentCreditForItem = (itemId: string): number => {
     return this.transactions
-        .filter((transaction) => transaction.itemId === itemId)
-        .map((transaction) => transaction.credits)
-        .reduce((sum, credit) => sum + credit, 0);
+      .filter(transaction => transaction.itemId === itemId)
+      .map(transaction => transaction.credits)
+      .reduce((sum, credit) => sum + credit, 0);
   };
 
-  private generateTransaction =
-      (credits: number, itemId: string): Transaction => ({
-        id: UUID.v4(),
-        userId: this.id,
-        itemId,
-        eventId: this.eventId,
-        time: new Date(),
-        credits,
-      })
+  private generateTransaction = (credits: number, itemId: string): Transaction => ({
+    id: UUID.v4(),
+    userId: this.id,
+    itemId,
+    eventId: this.eventId,
+    time: new Date(),
+    credits
+  });
 }

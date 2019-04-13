@@ -1,5 +1,5 @@
-import {Model} from '../../DataModels';
-import {InMemoryTransactionProvider} from '../TransactionProvider';
+import { Model } from '../../DataModels';
+import { InMemoryTransactionProvider } from '../TransactionProvider';
 
 describe('TransactionProvider Tests', () => {
   let transactionProvider: Model.TransactionProvider;
@@ -30,20 +30,21 @@ describe('TransactionProvider Tests', () => {
     expect(retrievedTransaction).toEqual(transaction);
 
     // List
-    await transactionProvider.create({...transaction, id: 'newTransactionId'});
-    await transactionProvider.create(
-        {...transaction, id: 'anotherTransactionId', eventId: 'newEventId'});
+    await transactionProvider.create({ ...transaction, id: 'newTransactionId' });
+    await transactionProvider.create({
+      ...transaction,
+      id: 'anotherTransactionId',
+      eventId: 'newEventId'
+    });
     await transactionProvider.create({
       ...transaction,
       id: 'thirdTransactionId',
       eventId: 'newEventId',
       itemId: 'newItemId'
     });
-    let transactions =
-        await transactionProvider.listTransactionsByEventId('eventId');
+    let transactions = await transactionProvider.listTransactionsByEventId('eventId');
     expect(transactions).toContainEqual(transaction);
-    expect(transactions)
-        .toContainEqual({...transaction, id: 'newTransactionId'});
+    expect(transactions).toContainEqual({ ...transaction, id: 'newTransactionId' });
     expect(transactions.length).toEqual(2);
 
     transactions = await transactionProvider.listTransactionsByItemId('itemId');
@@ -56,8 +57,7 @@ describe('TransactionProvider Tests', () => {
 
     // delete
     await transactionProvider.delete('newTransactionId');
-    transactions =
-        await transactionProvider.listTransactionsByEventId('eventId');
+    transactions = await transactionProvider.listTransactionsByEventId('eventId');
     expect(transactions).toContainEqual(transaction);
     expect(transactions.length).toEqual(1);
     done();

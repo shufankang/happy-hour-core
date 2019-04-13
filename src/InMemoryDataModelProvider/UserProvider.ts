@@ -1,41 +1,39 @@
-import {Model} from '../DataModels';
+import { Model } from '../DataModels';
 
 export class InMemoryUserProvider implements Model.UserProvider {
   private users: Map<string, Model.User> = new Map();
   private eventIdToUserIdSet: Map<string, Set<string>> = new Map();
   private userNameToUserIdSet: Map<string, Set<string>> = new Map();
 
-  listEventIdsByUserName = async(userName: string):
-      Promise<string[]> => {
-        const userIdSet = this.userNameToUserIdSet.get(userName);
-        const eventIds: Set<string> = new Set();
-        if (userIdSet) {
-          userIdSet.forEach(id => {
-            const user = this.users.get(id);
-            if (user) {
-              eventIds.add(user.eventId);
-            }
-          });
+  listEventIdsByUserName = async (userName: string): Promise<string[]> => {
+    const userIdSet = this.userNameToUserIdSet.get(userName);
+    const eventIds: Set<string> = new Set();
+    if (userIdSet) {
+      userIdSet.forEach(id => {
+        const user = this.users.get(id);
+        if (user) {
+          eventIds.add(user.eventId);
         }
-        return Array.from(eventIds);
-      }
+      });
+    }
+    return Array.from(eventIds);
+  };
 
-  listUsersByEventId = async(eventId: string):
-      Promise<Model.User[]> => {
-        const userIdSet = this.eventIdToUserIdSet.get(eventId);
-        const userList: Model.User[] = [];
-        if (userIdSet) {
-          userIdSet.forEach(id => {
-            const user = this.users.get(id);
-            if (user) {
-              userList.push(user);
-            }
-          });
+  listUsersByEventId = async (eventId: string): Promise<Model.User[]> => {
+    const userIdSet = this.eventIdToUserIdSet.get(eventId);
+    const userList: Model.User[] = [];
+    if (userIdSet) {
+      userIdSet.forEach(id => {
+        const user = this.users.get(id);
+        if (user) {
+          userList.push(user);
         }
-        return userList;
-      }
+      });
+    }
+    return userList;
+  };
 
-  create = async(t: Model.User): Promise<Model.User> => {
+  create = async (t: Model.User): Promise<Model.User> => {
     if (this.users.get(t.id)) {
       throw new Error('AlreadyExists');
     }
@@ -55,7 +53,7 @@ export class InMemoryUserProvider implements Model.UserProvider {
     }
     return t;
   };
-  get = async(id: string): Promise<Model.User> => {
+  get = async (id: string): Promise<Model.User> => {
     const user = this.users.get(id);
     if (user) {
       return user;
@@ -63,7 +61,7 @@ export class InMemoryUserProvider implements Model.UserProvider {
       throw new Error('NotFound');
     }
   };
-  update = async(t: Model.User): Promise<Model.User> => {
+  update = async (t: Model.User): Promise<Model.User> => {
     const user = this.users.get(t.id);
     if (user) {
       this.users.set(t.id, t);
@@ -72,7 +70,7 @@ export class InMemoryUserProvider implements Model.UserProvider {
       throw new Error('NotFound');
     }
   };
-  delete = async(id: string): Promise<void> => {
+  delete = async (id: string): Promise<void> => {
     const user = this.users.get(id);
     if (user) {
       const eventId = user.eventId;
@@ -87,5 +85,5 @@ export class InMemoryUserProvider implements Model.UserProvider {
       }
       this.users.delete(id);
     }
-  }
+  };
 }

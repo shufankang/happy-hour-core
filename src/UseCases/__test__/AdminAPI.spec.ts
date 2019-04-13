@@ -1,5 +1,5 @@
-import {InMemoryDataModelProviderFactory} from '../../InMemoryDataModelProvider/ProviderFactory';
-import {AdminAPI, ConcreteAdminAPI} from '../AdminAPI';
+import { InMemoryDataModelProviderFactory } from '../../InMemoryDataModelProvider/ProviderFactory';
+import { AdminAPI, ConcreteAdminAPI } from '../AdminAPI';
 
 describe('By using Admin API', () => {
   const eventId = 'eventId';
@@ -18,8 +18,7 @@ describe('By using Admin API', () => {
     endAt: new Date()
   };
 
-  const adminAPI: AdminAPI =
-      new ConcreteAdminAPI(new InMemoryDataModelProviderFactory());
+  const adminAPI: AdminAPI = new ConcreteAdminAPI(new InMemoryDataModelProviderFactory());
 
   it('should create event', async done => {
     await adminAPI.createEvent(eventInput);
@@ -87,8 +86,7 @@ describe('By using Admin API', () => {
     const imageSrc = 'imageSrc';
     const price = 10;
     const name = 'apple';
-    const item = await adminAPI.addItem(
-        organizerId, eventId, url, imageSrc, price, name);
+    const item = await adminAPI.addItem(organizerId, eventId, url, imageSrc, price, name);
     expect(item).toBeTruthy();
     expect(item.eventId).toEqual(eventId);
     itemId = item.id;
@@ -108,8 +106,7 @@ describe('By using Admin API', () => {
       const imageSrc = 'imageSrc';
       const price = 10;
       const name = 'apple';
-      await adminAPI.addItem(
-          'anotherOrganizer', eventId, url, imageSrc, price, name);
+      await adminAPI.addItem('anotherOrganizer', eventId, url, imageSrc, price, name);
       fail('Unexpected success.');
     } catch (err) {
       expect(err.message).toEqual('Unauthorized');
@@ -119,12 +116,11 @@ describe('By using Admin API', () => {
 
   it('should not remove item for another event', async done => {
     try {
-      await adminAPI.createEvent({...eventInput, id: 'anotherEvent'});
+      await adminAPI.createEvent({ ...eventInput, id: 'anotherEvent' });
       await adminAPI.removeItem(organizerId, 'anotherEvent', itemId);
       fail('Unexpected success.');
     } catch (err) {
-      expect(err.message)
-          .toEqual('The item you are trying to delete do not belong to you.');
+      expect(err.message).toEqual('The item you are trying to delete do not belong to you.');
     }
     done();
   });

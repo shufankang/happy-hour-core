@@ -1,5 +1,5 @@
-import {Model} from '../../DataModels';
-import {InMemoryEventProvider} from '../EventProvider';
+import { Model } from '../../DataModels';
+import { InMemoryEventProvider } from '../EventProvider';
 
 describe('EventProvider Tests', () => {
   let eventProvider: Model.EventProvider;
@@ -33,12 +33,11 @@ describe('EventProvider Tests', () => {
     expect(retrievedEvent).toEqual(event);
 
     // List
-    await eventProvider.create({...event, id: 'newEventId'});
-    await eventProvider.create(
-        {...event, id: 'anotherEventId', organizerId: 'newOrganizerId'});
+    await eventProvider.create({ ...event, id: 'newEventId' });
+    await eventProvider.create({ ...event, id: 'anotherEventId', organizerId: 'newOrganizerId' });
     let events = await eventProvider.listEventsByOrganizerId('organizerId');
     expect(events).toContainEqual(event);
-    expect(events).toContainEqual({...event, id: 'newEventId'});
+    expect(events).toContainEqual({ ...event, id: 'newEventId' });
     expect(events.length).toEqual(2);
 
     // delete
