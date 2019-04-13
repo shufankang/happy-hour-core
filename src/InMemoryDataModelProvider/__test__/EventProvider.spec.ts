@@ -34,7 +34,11 @@ describe('EventProvider Tests', () => {
 
     // List
     await eventProvider.create({ ...event, id: 'newEventId' });
-    await eventProvider.create({ ...event, id: 'anotherEventId', organizerId: 'newOrganizerId' });
+    await eventProvider.create({
+      ...event,
+      id: 'anotherEventId',
+      organizerId: 'newOrganizerId'
+    });
     let events = await eventProvider.listEventsByOrganizerId('organizerId');
     expect(events).toContainEqual(event);
     expect(events).toContainEqual({ ...event, id: 'newEventId' });

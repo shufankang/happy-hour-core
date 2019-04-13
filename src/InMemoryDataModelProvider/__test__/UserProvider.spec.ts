@@ -57,6 +57,7 @@ describe('UserProvider Tests', () => {
 
   it('should not create 2 users with same id', async done => {
     await userProvider.create(user);
+    await userProvider.create({ ...user, id: 'anotherId' });
     try {
       await userProvider.create(user);
       fail();

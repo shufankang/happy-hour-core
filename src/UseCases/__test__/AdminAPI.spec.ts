@@ -1,13 +1,13 @@
 import { InMemoryDataModelProviderFactory } from '../../InMemoryDataModelProvider/ProviderFactory';
-import { AdminAPI, ConcreteAdminAPI } from '../index';
+import { AdminAPI, ConcreteAdminAPI, API } from '../index';
 
 describe('By using Admin API', () => {
-  const eventId = 'eventId';
   const organizerId = 'organizerId';
   let itemId: string;
+  let eventId: string;
+  let userId: string;
 
-  const eventInput = {
-    id: eventId,
+  const eventInput: API.CreateEventRequest = {
     organizerId,
     name: 'eventName',
     description: 'description',
@@ -21,21 +21,23 @@ describe('By using Admin API', () => {
   const adminAPI: AdminAPI = new ConcreteAdminAPI(new InMemoryDataModelProviderFactory());
 
   it('should create event', async done => {
-    await adminAPI.createEvent(eventInput);
+    const event = await adminAPI.createEvent(eventInput);
+    expect(event).toBeTruthy();
+    eventId = event.id;
     done();
   });
 
   it('should get event', async done => {
     const event = await adminAPI.getEvent(organizerId, eventId);
     expect(event).toBeTruthy();
-    expect(event).toEqual(eventInput);
+    expect(event).toEqual({ ...eventInput, id: eventId });
     done();
   });
 
   it('should list event', async done => {
     const events = await adminAPI.listEvents(organizerId);
     expect(events.length).toEqual(1);
-    expect(events[0]).toEqual(eventInput);
+    expect(events[0]).toEqual({ ...eventInput, id: eventId });
     done();
   });
 
@@ -46,14 +48,15 @@ describe('By using Admin API', () => {
   });
 
   it('should add user to an event', async done => {
-    await adminAPI.addUser(organizerId, {
+    const user = await adminAPI.addUser(organizerId, {
       eventId,
-      id: 'userId',
       userName: 'userName',
       name: 'name',
       initialCredits: 10,
       email: 'email'
     });
+    expect(user).toBeTruthy();
+    userId = user.id;
     done();
   });
 
@@ -61,7 +64,6 @@ describe('By using Admin API', () => {
     try {
       await adminAPI.addUser(organizerId, {
         eventId,
-        id: 'userId2',
         userName: 'userName',
         name: 'name',
         initialCredits: 1000,
@@ -86,7 +88,13 @@ describe('By using Admin API', () => {
     const imageSrc = 'imageSrc';
     const price = 10;
     const name = 'apple';
-    const item = await adminAPI.addItem(organizerId, eventId, url, imageSrc, price, name);
+    const item = await adminAPI.addItem(organizerId, {
+      url,
+      imageSrc,
+      price,
+      name,
+      eventId
+    });
     expect(item).toBeTruthy();
     expect(item.eventId).toEqual(eventId);
     itemId = item.id;
@@ -106,7 +114,13 @@ describe('By using Admin API', () => {
       const imageSrc = 'imageSrc';
       const price = 10;
       const name = 'apple';
-      await adminAPI.addItem('anotherOrganizer', eventId, url, imageSrc, price, name);
+      await adminAPI.addItem('anotherOrganizer', {
+        url,
+        imageSrc,
+        price,
+        name,
+        eventId
+      });
       fail('Unexpected success.');
     } catch (err) {
       expect(err.message).toEqual('Unauthorized');
@@ -116,8 +130,8 @@ describe('By using Admin API', () => {
 
   it('should not remove item for another event', async done => {
     try {
-      await adminAPI.createEvent({ ...eventInput, id: 'anotherEvent' });
-      await adminAPI.removeItem(organizerId, 'anotherEvent', itemId);
+      const event = await adminAPI.createEvent({ ...eventInput });
+      await adminAPI.removeItem(organizerId, event.id, itemId);
       fail('Unexpected success.');
     } catch (err) {
       expect(err.message).toEqual('The item you are trying to delete do not belong to you.');
@@ -127,6 +141,8 @@ describe('By using Admin API', () => {
 
   it('should remove item', async done => {
     await adminAPI.removeItem(organizerId, eventId, itemId);
+    const items = await adminAPI.listItems(organizerId, eventId);
+    expect(items.length).toEqual(0);
     done();
   });
 });
