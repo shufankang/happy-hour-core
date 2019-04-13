@@ -1,7 +1,7 @@
 # HappyHourCore
 
 [![Build Status](https://travis-ci.org/VividKnife/happy-hour-core.svg?branch=master)](https://travis-ci.org/VividKnife/happy-hour-core)
-[![styled with prettier](https://img.shields.io/badge/styled_with-prettier-ff69b4.svg)](https://github.com/prettier/prettier)
+[![styled with prettier](https://img.shields.io/badge/styled_with-prettier-ff69b4.svg)](https://github.com/prettier/prettier) [![Greenkeeper badge](https://badges.greenkeeper.io/VividKnife/happy-hour-core.svg)](https://greenkeeper.io/)
 
 This project is trying to follow [The Clean Architecture](http://blog.cleancoder.com/uncle-bob/2012/08/13/the-clean-architecture.html). Contains only the core business logic of the system that can work regardless DataBase, UI, NetworkInterface and etc. 
 
