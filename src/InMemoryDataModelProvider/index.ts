@@ -1,1 +1,1 @@
-import { Model } from '../DataModels'
+import {Model} from '../DataModels';

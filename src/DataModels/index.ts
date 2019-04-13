@@ -1,2 +1,5 @@
-export { Model } from './Model'
-export { DataConverter } from './DataConverter'
+import * as Model from './Model';
+export {DataConverter} from './DataConverter';
+
+
+export {Model};
