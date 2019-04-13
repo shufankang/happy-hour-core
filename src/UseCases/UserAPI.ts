@@ -1,14 +1,30 @@
-import { Model } from "../DataModels";
-import { API } from "./APIModel";
+import { Model } from '../DataModels'
+import { API } from './APIModel'
 
 export interface UserAPI {
-    constructor(dataModelProviderFactory: Model.DataProviderFactory): UserAPI;
-    spendCredits: (userId: string, eventId: string, itemId: string, amount: number) => Promise<API.User>;
-    returnCredits: (userId: string, eventId: string, itemId: string, amount: number) => Promise<API.User>;
-    getUser: (userId: string, eventId: string) => Promise<API.User>;
-    listEvents: (userId: string) => Promise<API.Event[]>;
-    getEvent: (userId: string, eventId: string) => Promise<API.Event>;
-    addItem: (userId: string, eventId: string, url: string, imageSrc: string, price: number, name: string) => Promise<API.Item>;
+  spendCredits: (
+    userId: string,
+    eventId: string,
+    itemId: string,
+    amount: number
+  ) => Promise<API.User>
+  returnCredits: (
+    userId: string,
+    eventId: string,
+    itemId: string,
+    amount: number
+  ) => Promise<API.User>
+  getUser: (userId: string, eventId: string) => Promise<API.User>
+  listEvents: (userId: string) => Promise<API.Event[]>
+  getEvent: (userId: string, eventId: string) => Promise<API.Event>
+  addItem: (
+    userId: string,
+    eventId: string,
+    url: string,
+    imageSrc: string,
+    price: number,
+    name: string
+  ) => Promise<API.Item>
 }
 
 // TODO implement
