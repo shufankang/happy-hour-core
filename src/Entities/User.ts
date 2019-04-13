@@ -14,8 +14,8 @@ export interface Data {
 }
 
 export interface User {
-  spendCredits: (amount: number, itemId: string) => void;
-  returnCredits: (amount: number, itemId: string) => void;
+  spendCredits: (amount: number, itemId: string) => Transaction;
+  returnCredits: (amount: number, itemId: string) => Transaction;
   getSpentCreditForItem: (itemId: string) => number;
   getCredits: () => number;
   getData: () => Data;
@@ -41,7 +41,7 @@ export class ConcreteUser implements User {
     transactions: this.transactions.slice(0)
   });
 
-  spendCredits = (amount: number, itemId: string): void => {
+  spendCredits = (amount: number, itemId: string): Transaction => {
     if (amount <= 0) {
       throw new Error(AMOUNT_SHOULD_GREATER_THAN_0);
     }
@@ -50,10 +50,12 @@ export class ConcreteUser implements User {
       throw new Error(NOT_ENOUGH_CREDITS_TO_SPEND);
     }
 
-    this.transactions.push(this.generateTransaction(amount, itemId));
+    const transaction = this.generateTransaction(amount, itemId);
+    this.transactions.push(transaction);
+    return transaction;
   };
 
-  returnCredits = (amount: number, itemId: string): void => {
+  returnCredits = (amount: number, itemId: string): Transaction => {
     if (amount <= 0) {
       throw new Error(AMOUNT_SHOULD_GREATER_THAN_0);
     }
@@ -62,7 +64,9 @@ export class ConcreteUser implements User {
     if (spentCreditForItem < amount) {
       throw new Error(NOT_ENOUGH_CREDITS_TO_RETURN);
     }
-    this.transactions.push(this.generateTransaction(0 - amount, itemId));
+    const transaction = this.generateTransaction(0 - amount, itemId);
+    this.transactions.push(transaction);
+    return transaction;
   };
 
   getCredits = (): number => {

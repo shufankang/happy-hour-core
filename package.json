@@ -32,7 +32,8 @@
     "semantic-release": "semantic-release",
     "semantic-release-prepare": "ts-node tools/semantic-release-prepare",
     "precommit": "lint-staged",
-    "travis-deploy-once": "travis-deploy-once"
+    "travis-deploy-once": "travis-deploy-once",
+    "release": "npm run test:prod && npm run build"
   },
   "lint-staged": {
     "{src,test}/**/*.ts": [
@@ -58,14 +59,16 @@
     ],
     "coveragePathIgnorePatterns": [
       "/node_modules/",
-      "/test/"
+      "/dist",
+      "/test/",
+      "/src/index.ts"
     ],
     "coverageThreshold": {
       "global": {
-        "branches": 60,
-        "functions": 90,
-        "lines": 90,
-        "statements": 92
+        "branches": 99,
+        "functions": 99,
+        "lines": 99,
+        "statements": 99
       }
     },
     "collectCoverageFrom": [
@@ -74,7 +77,8 @@
   },
   "prettier": {
     "semi": true,
-    "singleQuote": true
+    "singleQuote": true,
+    "tabWidth": 2
   },
   "commitlint": {
     "extends": [

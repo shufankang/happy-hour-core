@@ -1,3 +1,14 @@
+export interface CreateEventRequest {
+  name: string;
+  description: string;
+  organizerId: string;
+  organizerName: string;
+  organizerEmail: string;
+  budget: number;
+  startAt: Date;
+  endAt: Date;
+}
+
 export interface Event {
   id: string;
   name: string;
@@ -10,6 +21,14 @@ export interface Event {
   endAt: Date;
 }
 
+export interface CreateUserRequest {
+  eventId: string;
+  name: string;
+  email: string;
+  userName: string;
+  initialCredits: number;
+}
+
 export interface User {
   eventId: string;
   id: string;
@@ -17,6 +36,7 @@ export interface User {
   email: string;
   userName: string;
   initialCredits: number;
+  currentCredits: number;
 }
 
 export interface Transaction {
@@ -24,8 +44,16 @@ export interface Transaction {
   eventId: string;
   itemId: string;
   userId: string;
-  credits: string;
+  credits: number;
   time: Date;
+}
+
+export interface CreateItemRequest {
+  eventId: string;
+  price: number;
+  url: string;
+  imageSrc: string;
+  name: string;
 }
 
 export interface Item {
@@ -35,4 +63,5 @@ export interface Item {
   url: string;
   imageSrc: string;
   name: string;
+  credits: number;
 }

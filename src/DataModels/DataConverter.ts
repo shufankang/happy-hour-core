@@ -18,7 +18,7 @@ export class DataConverter {
 
   toTransactionEntity = (transaction: Model.Transaction): Transaction => ({ ...transaction });
 
-  toItemEntity = (item: Model.Item, transactions: Model.Transaction[]): Item => ({
+  toItemEntity = (item: Model.Item, transactions: Model.Transaction[]): Item.Data => ({
     ...item,
     transactions: transactions.map(this.toTransactionEntity)
   });

@@ -6,16 +6,28 @@ import { InMemoryTransactionProvider } from './TransactionProvider';
 import { InMemoryUserProvider } from './UserProvider';
 
 export class InMemoryDataModelProviderFactory implements Model.DataProviderFactory {
+  private eventProvider: Model.EventProvider;
+  private userProvider: Model.UserProvider;
+  private itemProvider: Model.ItemProvider;
+  private transactionProvider: Model.TransactionProvider;
+
+  constructor() {
+    this.eventProvider = new InMemoryEventProvider();
+    this.userProvider = new InMemoryUserProvider();
+    this.itemProvider = new InMemoryItemProvider();
+    this.transactionProvider = new InMemoryTransactionProvider();
+  }
+
   createEventProvider = (): Model.EventProvider => {
-    return new InMemoryEventProvider();
+    return this.eventProvider;
   };
   createItemProvider = (): Model.ItemProvider => {
-    return new InMemoryItemProvider();
+    return this.itemProvider;
   };
   createUserProvider = (): Model.UserProvider => {
-    return new InMemoryUserProvider();
+    return this.userProvider;
   };
   createTransactionProvider = (): Model.TransactionProvider => {
-    return new InMemoryTransactionProvider();
+    return this.transactionProvider;
   };
 }
