@@ -1,4 +1,4 @@
-import { User } from './User';
+import { User } from '../index';
 
 describe('User', () => {
   const INITIAL_CREDITS = 10;
@@ -15,7 +15,7 @@ describe('User', () => {
 
   beforeEach(() => {
     user = new User.ConcreteUser(userData);
-  })
+  });
 
   it('should get initial credits', () => {
     expect(user.getCredits()).toEqual(INITIAL_CREDITS);
@@ -62,12 +62,13 @@ describe('User', () => {
 
   it(`should NOT be able to return credits from another item`, () => {
     user.spendCredits(5, ITEM_ID);
-    expect(() => user.returnCredits(5, 'anotherItem')).toThrowError(User.NOT_ENOUGH_CREDITS_TO_RETURN);
+    expect(() => user.returnCredits(5, 'anotherItem')).toThrowError(
+      User.NOT_ENOUGH_CREDITS_TO_RETURN
+    );
   });
 
   it('should get less credits after spend credits', () => {
     user.spendCredits(2, ITEM_ID);
     expect(user.getCredits()).toEqual(INITIAL_CREDITS - 2);
   });
-
 });

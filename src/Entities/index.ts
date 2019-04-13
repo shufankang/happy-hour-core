@@ -1,4 +1,8 @@
-export { Event } from './Event';
+import * as Event from './Event';
+import * as User from './User';
+
 export { Item } from './Item';
 export { Transaction } from './Transaction';
-export { User } from './User';
+
+export { Event };
+export { User };

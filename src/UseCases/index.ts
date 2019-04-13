@@ -1,3 +1,5 @@
-export { API } from './APIModel';
+import * as API from './APIModel';
+
+export { AdminAPI, ConcreteAdminAPI } from './AdminAPI';
 export { UserAPI } from './UserAPI';
-export { AdminAPI } from './AdminAPI';
+export { API };
