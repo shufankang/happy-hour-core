@@ -1,5 +1,6 @@
 # HappyHourCore
 
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/83a4580353a74865b60e67954b2537c2)](https://app.codacy.com/app/skang7/happy-hour-core?utm_source=github.com&utm_medium=referral&utm_content=VividKnife/happy-hour-core&utm_campaign=Badge_Grade_Dashboard)
 [![Build Status](https://travis-ci.org/VividKnife/happy-hour-core.svg?branch=master)](https://travis-ci.org/VividKnife/happy-hour-core)
 [![Coverage Status](https://coveralls.io/repos/github/VividKnife/happy-hour-core/badge.svg?branch=master)](https://coveralls.io/github/VividKnife/happy-hour-core?branch=master)
 [![styled with prettier](https://img.shields.io/badge/styled_with-prettier-ff69b4.svg)](https://github.com/prettier/prettier) [![Greenkeeper badge](https://badges.greenkeeper.io/VividKnife/happy-hour-core.svg)](https://greenkeeper.io/)
