@@ -62,7 +62,7 @@ export class ConcreteAdminAPI implements AdminAPI {
     // user.
     event.addUser(user.id, user.initialCredits);
 
-    return await this.userProvider.create(user);
+    return this.userProvider.create(user);
   };
 
   listUsers = async (organizerId: string, eventId: string): Promise<API.User[]> => {
@@ -77,7 +77,7 @@ export class ConcreteAdminAPI implements AdminAPI {
     if (item.eventId !== eventId) {
       throw Error('The item you are trying to delete do not belong to you.');
     }
-    this.itemProvider.delete(itemId);
+    await this.itemProvider.delete(itemId);
   };
 
   addItem = async (

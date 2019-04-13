@@ -1,5 +1,5 @@
 import { InMemoryDataModelProviderFactory } from '../../InMemoryDataModelProvider/ProviderFactory';
-import { AdminAPI, ConcreteAdminAPI } from '../AdminAPI';
+import { AdminAPI, ConcreteAdminAPI } from '../index';
 
 describe('By using Admin API', () => {
   const eventId = 'eventId';
