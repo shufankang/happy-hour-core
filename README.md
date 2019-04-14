@@ -22,3 +22,5 @@ This project is trying to follow [The Clean Architecture](http://blog.cleancoder
 ## Additional
 1. Send email invitation when a user is added an event.
 1. After the event ends, generate a shopping list and email to the organizer.
+
+<img src="./dependencygraph.svg">
